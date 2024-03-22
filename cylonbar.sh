@@ -1,7 +1,6 @@
 #!/bin/bash
 # cylonbar: Cylon inspired progress bar
 SPEED=0.1
-DELCAR="\\x08"
 BARCAR="-"
 CAR="*"
 
@@ -14,7 +13,6 @@ help(){
 prepare_bar_length(){
     for i in `seq 0 $barlength`;do
         bar=$bar$BARCAR
-        del=$del$DELCAR
     done
 }
 ##########
@@ -34,8 +32,8 @@ switch=0 # 0 move to right, 1 move to left
 cont=0
 #wait for $PID to stop
 while [ -d /proc/$pid ];do
-    #draw bar
-    echo -en "${bar:0:$cont}$CAR${bar:$cont+1:$barlength}" 
+    #draw bar (red)
+    echo -en "\033[0;31m${bar:0:$cont}$CAR${bar:$cont+1:$barlength}\033[0m" 
 
     # increment or decrement cont to move right or left
     [ $switch -eq 0 ] && cont=$(($cont+1)) || cont=$(($cont-1))
@@ -46,7 +44,7 @@ while [ -d /proc/$pid ];do
 
     sleep $SPEED 
 
-    # delete progress bar for redrawing
-    echo -en $del
+    # delete progress bar for redrawing (using ansi / escape chars
+    echo -en "\033[1K\r"
 done
 
