@@ -2,7 +2,7 @@
 # cylonbar: Cylon inspired progress bar
 SPEED=0.1
 BARCAR="-"
-CAR="*"
+CAR="="
 
 help(){
     echo "progbar <pid> <bar_length>"
@@ -11,7 +11,7 @@ help(){
 }
 
 prepare_bar_length(){
-    for i in `seq 0 $barlength`;do
+    for i in $(seq 0 $barlength);do
         bar=$bar$BARCAR
     done
 }
